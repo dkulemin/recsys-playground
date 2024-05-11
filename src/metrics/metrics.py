@@ -30,3 +30,25 @@ def recall_at_k(preds: Iterable, labels: Iterable, k: int) -> float:
         len([i for i in preds[:k] if i in labels]) / len(labels)
         if labels else 0.
     )
+
+
+def f_beta_score_at_k(
+    preds: Iterable,
+    labels: Iterable,
+    beta: float,
+    k: int,
+) -> float:
+    """
+    """
+    precision = precision_at_k(preds, labels, k)
+    recall = recall_at_k(preds, labels, k)
+    return (
+        (1 + beta**2) * precision * recall / (beta**2 * precision + recall)
+        if precision * recall > 0 else 0.
+    )
+
+
+def f1_score_at_k(preds: Iterable, labels: Iterable, k: int) -> float:
+    """
+    """
+    return f_beta_score_at_k(preds, labels, 1, k)
