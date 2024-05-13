@@ -52,3 +52,13 @@ def f1_score_at_k(preds: Iterable, labels: Iterable, k: int) -> float:
     """
     """
     return f_beta_score_at_k(preds, labels, 1, k)
+
+
+def average_precision_at_k(preds: Iterable, labels: Iterable, k: int) -> float:
+    """
+    """
+    return sum([
+        precision_at_k(preds, labels, p + 1)
+        for p in range(k)
+        if preds[p] in labels
+    ]) / len(labels) if labels else 0.
