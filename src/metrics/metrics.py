@@ -59,6 +59,6 @@ def average_precision_at_k(preds: Iterable, labels: Iterable, k: int) -> float:
     """
     return sum([
         precision_at_k(preds, labels, p + 1)
-        for p in range(k)
+        for p in range(min(k, len(preds)))
         if preds[p] in labels
     ]) / len(labels) if labels else 0.
